@@ -1,8 +1,14 @@
 import os
 
 import delighted
+from Reviews import Reviews
 
-delighted.api_key = os.getenv('API_KEY')
+reviews = Reviews()
+# reviews.update_people()
 
-responses = delighted.SurveyResponse.all(order='desc')
-print(responses)
+# delighted.api_key = os.getenv('API_KEY')
+
+# def 
+
+# responses = delighted.SurveyResponse.all(order='desc')
+# print(responses)
