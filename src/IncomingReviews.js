@@ -1,8 +1,8 @@
+import axios from 'axios';
 import CurateDialog from './CurateDialog';
 import IncomingReviewRow from './IncomingReviewRow';
 import React, { Component } from 'react';
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
-import axios from 'axios';
 
 export default class IncomingReviews extends Component {
   state = {
