@@ -28,6 +28,7 @@ def external_reviews():
     query_params['keyword'] = '%' + keyword + '%'
     max_length = request.args.get('max_length', None)
     min_length = request.args.get('min_length', None)
+    polarity = request.args.get('polarity', None)
     page = int(request.args.get('page', 1))
     offset = (page - 1) * PER_PAGE
     query_params['offset'] = offset
@@ -38,6 +39,9 @@ def external_reviews():
     if min_length is not None:
         query_params['min_length'] = min_length
         query = query + ' AND CHAR_LENGTH(r.comment) > %(min_length)s'
+    if polarity is not None:
+        query_params['polarity'] = polarity
+        query = query + ' AND polarity = %(polarity)s'
     query = query + ' LIMIT %(per_page)s OFFSET %(offset)s'
     cursor.execute(query, query_params)
     for (review_id, name, comment, linked_id, polarity) in cursor:
