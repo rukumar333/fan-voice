@@ -51,6 +51,7 @@ export default class IncomingReviews extends Component {
             <TableRow>
             <TableCell>Name</TableCell>
             <TableCell>Review Content</TableCell>
+            <TableCell>Sentiment</TableCell>
             <TableCell></TableCell>
             </TableRow>
           </TableHead>

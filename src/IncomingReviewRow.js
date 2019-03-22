@@ -11,14 +11,19 @@ export default class IncomingReviewRow extends Component {
     const { review } = this.props;
 
     return (
-      <TableRow>
+      <TableRow selected={review.is_curated}>
         <TableCell><OneLine>{review.name}</OneLine></TableCell>
         <TableCell>{review.quote}</TableCell>
         <TableCell>
+          <div style={{color: review.polarity === 'positive' ? 'green' : 'red'}}>{review.polarity}</div>
+        </TableCell>
+        <TableCell>
           <OneLine>
-            <Button color="primary" onClick={this.handleSelectClick} variant="contained">
-              Add to curated
-            </Button>
+            {review.is_curated ? 'Added!' :
+              <Button color="primary" onClick={this.handleSelectClick} variant="contained">
+                Add to curated
+              </Button>
+            }
           </OneLine>
         </TableCell>
       </TableRow>
