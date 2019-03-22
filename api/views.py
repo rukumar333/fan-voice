@@ -8,9 +8,11 @@ cnx = mysql.connector.connect(user=config.DB_USER, password=config.DB_PASS, host
 
 query_reviews = 'SELECT r.id, r.name, r.comment, c.review_id as linked_id, r.polarity FROM reviews r LEFT JOIN curated_reviews c on c.review_id=r.id WHERE r.comment LIKE %(keyword)s'
 
-query_curated_reviews = 'SELECT name, comment, gender FROM curated_reviews'
+query_curated_reviews = 'SELECT id, name, comment, gender FROM curated_reviews'
 
 insert_curated_reviews = ('INSERT INTO curated_reviews (review_id, comment, name, gender) VALUES (%s, %s, %s, %s)')
+
+delete_query_curated_reviews = 'DELETE FROM curated_reviews WHERE id = %s'
 
 PER_PAGE = 20
 
@@ -64,6 +66,17 @@ def add_curated_reviews(review_id):
     }
     return jsonify(response)
 
+@blueprint_http.route('/api/curated-reviews/<review_id>', methods=['DELETE'])
+def delete_curated_reviews(review_id):
+    cursor = cnx.cursor()
+    cursor.execute(delete_query_curated_reviews, (review_id,))
+    cnx.commit()
+    cursor.close()
+    response = {
+        'status': 'Successfully deleted curated review - id: ' + review_id
+    }
+    return jsonify(response)
+
 @blueprint_http.route('/api/curated-reviews')
 def get_curated_reviews():
     cursor = cnx.cursor()
@@ -78,8 +91,9 @@ def get_curated_reviews():
     query_params['offset'] = offset
     query = query + ' LIMIT %(per_page)s OFFSET %(offset)s'
     cursor.execute(query, query_params)
-    for (name, comment, gender) in cursor:
+    for (review_id, name, comment, gender) in cursor:
         review = {
+            'id' : review_id,
             'name' : name,
             'quote' : comment,
             'gender' : gender
