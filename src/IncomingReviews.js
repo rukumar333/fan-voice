@@ -1,3 +1,4 @@
+import axios from 'axios';
 import CurateDialog from './CurateDialog';
 import IncomingReviewRow from './IncomingReviewRow';
 import React, { Component } from 'react';
@@ -5,8 +6,26 @@ import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/c
 
 export default class IncomingReviews extends Component {
   state = {
-    selectedReview: null
+    loading: false,
+    reviews: [],
+    selectedReview: null,
+    total: 0
   };
+
+  componentDidMount() {
+    this.loadReviews();
+  }
+
+  async loadReviews() {
+    this.setState({ loading: true });
+    const { data } = await axios.get('/api/external-reviews');
+    this.setState({
+      loading: false,
+      reviews: data.reviews,
+      selectedReview: null,
+      total: data.total
+    });
+  }
 
   handleDialogClose = () => {
     this.setState({
@@ -36,8 +55,8 @@ export default class IncomingReviews extends Component {
             </TableRow>
           </TableHead>
           <TableBody>
-            {this.props.reviews.map(
-              review => <IncomingReviewRow onSelect={this.handleSelectReview} review={review} />
+            {this.state.reviews.map(
+              review => <IncomingReviewRow key={review.id} onSelect={this.handleSelectReview} review={review} />
             )}
           </TableBody>
         </Table>

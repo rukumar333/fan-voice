@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import { Button, TableCell, TableRow } from '@material-ui/core';
 
 export default class IncomingReviewRow extends Component {
@@ -11,14 +12,21 @@ export default class IncomingReviewRow extends Component {
 
     return (
       <TableRow>
-        <TableCell>{review.name}</TableCell>
-        <TableCell>{review.text}</TableCell>
+        <TableCell><OneLine>{review.name}</OneLine></TableCell>
+        <TableCell>{review.quote}</TableCell>
         <TableCell>
-          <Button color="primary" onClick={this.handleSelectClick} variant="contained">
-            Add to curated
-          </Button>
+          <OneLine>
+            <Button color="primary" onClick={this.handleSelectClick} variant="contained">
+              Add to curated
+            </Button>
+          </OneLine>
         </TableCell>
       </TableRow>
     );
   }
 }
+
+const OneLine = styled.div`
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`;

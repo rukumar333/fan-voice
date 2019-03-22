@@ -1,16 +1,14 @@
+import axios from 'axios';
 import IncomingReviews from './IncomingReviews';
 import React, { Component } from 'react';
 
-const makeReview = (name, text) => ({ name, text });
-
-const incomingReviews = [
-  makeReview('George Daole-Wellman', 'Nailed it!'),
-  makeReview('Rushil', 'Slayed!')
-];
-
 class App extends Component {
   handleAddCuratedReview = (review) => {
-
+    axios.post(`/api/curated-reviews/${review.id}`, {
+      gender: 'woman',
+      name: review.name,
+      quote: review.quote
+    });
   };
 
   render() {
@@ -18,7 +16,6 @@ class App extends Component {
       <div>
         <IncomingReviews
           onAddCuratedReview={this.handleAddCuratedReview}
-          reviews={incomingReviews}
         />
       </div>
     );
