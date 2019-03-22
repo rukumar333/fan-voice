@@ -1,3 +1,4 @@
 Flask==1.0.2
 delighted==2.3.0
 mysql-connector-python==8.0.15
+aylien-apiclient==0.7.0
