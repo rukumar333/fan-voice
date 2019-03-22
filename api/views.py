@@ -5,7 +5,7 @@ import mysql.connector
 blueprint_http = Blueprint('blueprint_http', __name__)
 
 cnx = mysql.connector.connect(user=config.DB_USER, password=config.DB_PASS, host=config.DB_HOST, database=config.DB_NAME)
-query_reviews = ('SELECT name, comment FROM reviews')
+query_reviews = ('SELECT id, name, comment FROM reviews')
 query_curated_reviews = ('SELECT name, comment, gender FROM curated_reviews')
 insert_curated_reviews = ('INSERT INTO curated_reviews (review_id, comment, name, gender) VALUES (%s, %s, %s, %s)')
 
@@ -17,8 +17,9 @@ def external_reviews():
     }
     cursor = cnx.cursor()
     cursor.execute(query_reviews)
-    for (name, comment) in cursor:
+    for (review_id, name, comment) in cursor:
         review = {
+            'id' : review_id,
             'name' : name,
             'quote' : comment
         }
