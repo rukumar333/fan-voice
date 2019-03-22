@@ -56,7 +56,7 @@ export default class IncomingReviews extends Component {
           </TableHead>
           <TableBody>
             {this.state.reviews.map(
-              review => <IncomingReviewRow onSelect={this.handleSelectReview} review={review} />
+              review => <IncomingReviewRow key={review.id} onSelect={this.handleSelectReview} review={review} />
             )}
           </TableBody>
         </Table>

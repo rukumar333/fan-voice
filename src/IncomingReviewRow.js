@@ -13,7 +13,7 @@ export default class IncomingReviewRow extends Component {
     return (
       <TableRow>
         <TableCell><OneLine>{review.name}</OneLine></TableCell>
-        <TableCell>{review.text}</TableCell>
+        <TableCell>{review.quote}</TableCell>
         <TableCell>
           <OneLine>
             <Button color="primary" onClick={this.handleSelectClick} variant="contained">

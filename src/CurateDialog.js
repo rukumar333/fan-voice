@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Typography } from '@material-ui/core';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Typography } from '@material-ui/core';
 
 export default class CurateModal extends Component {
   constructor(props) {
@@ -11,14 +10,15 @@ export default class CurateModal extends Component {
     const lastInitial = lastName ? lastName[0] + '.' : '';
     this.state = {
       name: lastInitial ? firstName + ' ' + lastInitial : firstName,
-      text: review.text
+      quote: review.quote
     };
   }
 
   handleSubmit = () => {
     this.props.onSubmit({
+      id: this.props.review.id,
       name: this.state.name,
-      text: this.state.text
+      quote: this.state.quote
     });
   }
 
@@ -39,8 +39,8 @@ export default class CurateModal extends Component {
           <Typography variant="body2">Original: {review.name}</Typography>
           <TextField fullWidth label="Redacted Name" name="name" onChange={this.handleTextFieldChange} value={this.state.name} />
           <Typography variant="h6">Review Content</Typography>
-          <Typography variant="body2">Original: {review.text}</Typography>
-          <TextField fullWidth label="Selected text" margin="normal" multiline name="text" onChange={this.handleTextFieldChange} value={this.state.text} variant="outlined" />
+          <Typography variant="body2">Original: {review.quote}</Typography>
+          <TextField fullWidth label="Selected text" margin="normal" multiline name="quote" onChange={this.handleTextFieldChange} value={this.state.quote} variant="outlined" />
         </DialogContent>
         <DialogActions>
           <Button onClick={onClose}>
