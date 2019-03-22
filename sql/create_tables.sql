@@ -7,7 +7,8 @@ CREATE TABLE IF NOT EXISTS reviews(
  comment text NOT NULL,
  order_id varchar(50) NOT NULL,
  seatgeek_message text NOT NULL,
- created int NOT NULL
+ created int NOT NULL,
+ polarity varchar(128)
 );
 
 CREATE TABLE IF NOT EXISTS curated_reviews(
