@@ -6,7 +6,7 @@ blueprint_http = Blueprint('blueprint_http', __name__)
 
 cnx = mysql.connector.connect(user=config.DB_USER, password=config.DB_PASS, host=config.DB_HOST, database=config.DB_NAME)
 
-query_reviews = 'SELECT r.id, r.name, r.comment, c.review_id as linked_id FROM reviews r LEFT JOIN curated_reviews c on c.review_id=r.id WHERE r.comment LIKE %(keyword)s'
+query_reviews = 'SELECT r.id, r.name, r.comment, c.review_id as linked_id, r.polarity FROM reviews r LEFT JOIN curated_reviews c on c.review_id=r.id WHERE r.comment LIKE %(keyword)s'
 
 query_curated_reviews = 'SELECT name, comment, gender FROM curated_reviews'
 
@@ -38,12 +38,13 @@ def external_reviews():
         query = query + ' AND CHAR_LENGTH(r.comment) > %(min_length)s'
     query = query + ' LIMIT %(per_page)s OFFSET %(offset)s'
     cursor.execute(query, query_params)
-    for (review_id, name, comment, linked_id) in cursor:
+    for (review_id, name, comment, linked_id, polarity) in cursor:
         review = {
             'id' : review_id,
             'name' : name,
             'quote' : comment,
-            'is_curated': linked_id is not None
+            'is_curated': linked_id is not None,
+            'polarity' : polarity
         }
         response['reviews'].append(review)
         response['total'] = response['total'] + 1
