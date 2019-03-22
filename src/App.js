@@ -9,10 +9,17 @@ const incomingReviews = [
 ];
 
 class App extends Component {
+  handleAddCuratedReview = (review) => {
+
+  };
+
   render() {
     return (
       <div>
-        <IncomingReviews reviews={incomingReviews} />
+        <IncomingReviews
+          onAddCuratedReview={this.handleAddCuratedReview}
+          reviews={incomingReviews}
+        />
       </div>
     );
   }

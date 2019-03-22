@@ -14,8 +14,9 @@ export default class IncomingReviews extends Component {
     });
   };
 
-  handleDialogSubmit = () => {
+  handleDialogSubmit = (review) => {
     this.handleDialogClose();
+    this.props.onAddCuratedReview(review);
   };
 
   handleSelectReview = (review) => {
