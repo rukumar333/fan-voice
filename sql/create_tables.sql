@@ -15,5 +15,6 @@ CREATE TABLE IF NOT EXISTS curated_reviews(
  review_id int NOT NULL,
  comment text NOT NULL,
  name varchar(256) NOT NULL,
+ gender varchar(32) NOT NULL,
  FOREIGN KEY (review_id) REFERENCES reviews(id)
 );
